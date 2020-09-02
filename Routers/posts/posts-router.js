@@ -1,11 +1,11 @@
 const express = require('express');
-const server = express()
+// const server = express()
 const db = require('../../data/db');
 const router = express.Router();
 const commentsRouter = require('../comments/comments-router');
 const { remove, find } = require('../../data/db');
 
-server.use('/:id/comments', commentsRouter)
+router.use('/:id/comments', commentsRouter)
 router.get('/', (req, res) => {
     
     if (!db) {
@@ -54,7 +54,6 @@ router.get('/:id', (req, res) => {
             .catch(err => res.status(500).json({ error: "The post information could not be retrieved." }))
     }
 })
-
 router.delete('/:id', (req, res) => {
     const id = req.params.id
     if (!db) {
@@ -106,4 +105,13 @@ router.put('/:id', (req, res) => {
             .catch(err => res.status(500).json({message: "could not look for id"}))
         }
 })
+
+// router.get('/:id/comments', (req, res) =>{
+//     const id = req.params.id
+//     db.findPostComments(id)
+//     .then(commentsRes =>{
+//         res.status(200).json(commentsRes)
+//     })
+
+// })
 module.exports = router;
